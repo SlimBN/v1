@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	
+		<title>Pajti | Connexion</title>
+		<link rel='stylesheet' href='/stylesheets/style.css' />
+		<link rel='stylesheet' href='/stylesheets/auths/connect.css' />
+	</head>
+
+	<body>
+		<div id="connect-page">
+
+			<div class="backgrounder">
+				
+			</div>
+
+
+			<div class="login-box">
+				
+				<div class="header">
+					<h2>Se connecter</h2>
+				</div>
+
+				<!-- show any messages that come back with authentication -->
+				<% if (message.length > 0) { %>
+					<div class="alert alert-danger"><%= message %></div>
+				<% } %>
+
+				<div class="connect-facebook" style="display: none;">
+					<a href=""><i class="fa fa-facebook-square"></i> Connexion avec Facebook</a>
+				</div>
+					
+				<form action="/login" method="post">
+				  <div>
+				  <input type="text" name="email" placeholder="Your Username please"></div>
+
+				  <div>
+				  <input type="password" name="password" placeholder="password"></div>
+
+				  <div class="actions">
+				  	<button type="Submit" class="button">Submit</button>
+				  </div>
+
+				</form>
+
+
+
+			</div>
+
+		</div>
+	</body>
+</html>
+
+

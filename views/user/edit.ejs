@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  	<title><%= userdata.local.username %> : Modifiez votre profil</title>
+	<link rel='stylesheet' href='/stylesheets/style.css' />
+	<link rel='stylesheet' href='/stylesheets/user/edit.css' />
+
+  	<!-- ETUDE DU REFERENCEMENT -->
+  	<!-- description meta -->
+  	<meta name="description" content="">
+  	<meta name="robots" content="index,follow,noarchive">
+
+	<link rel='stylesheet' href='/stylesheets/fonts.css' />
+
+	<script src="/javascripts/jquery.js"></script>
+
+</head>
+<body>
+
+
+		<form action="/profile/edit/" method="post" enctype="multipart/form-data">
+			
+			<div class="form">
+				<div class="label">Votre nom d'utilisateur:</div>
+				<% if (userdata.local.username) { %>
+				<input type="text" id="username" name="username" value="<%= userdata.local.username %>" placeholder="Nom d'utilisateur">
+				<% } else { %>
+				<input type="text" id="username" name="username" value="" placeholder="Nom d'utilisateur">
+				<% } %>				
+			</div>
+
+			
+			<div class="form">
+				<div class="label">Votre Adresse Email:</div>
+				<% if (userdata.local.email) { %>
+				<input type="text" id="email" name="email" value="<%= userdata.local.email %>" placeholder="nom.prenom@mail.com">
+				<% } else { %>
+				<input type="text" id="email" name="email" value="" placeholder="nom.prenom@mail.com">
+				<% } %>				
+			</div>
+
+
+			<div class="form">
+				<div class="label">Prénom:</div>
+				<% if (userdata.local.first_name) { %>
+				<input type="text" id="first_name" name="first_name" value="<%= userdata.local.first_name %>" placeholder="Prénom">
+				<% } else { %>
+				<input type="text" id="first_name" name="first_name" value="" placeholder="Prénom">
+				<% } %>				
+			</div>
+
+			
+			<div class="form">
+				<div class="label">Nom:</div>
+				<% if (userdata.local.last_name) { %>
+				<input type="text" id="last_name" name="last_name" placeholder="Nom" value="<%= userdata.local.last_name %>">
+				<% } else { %>
+				<input type="text" id="last_name" name="last_name" value="" placeholder="Nom">
+				<% } %>
+			</div>
+			
+			<div class="form">
+				<div class="label">A propos de moi:</div>
+				<% if (userdata.local.about) { %>
+				<textarea type="text" id="about" name="about" value=""><%= userdata.local.about %></textarea>
+				<% } else { %>
+				<textarea type="text" id="about" name="about" value=""></textarea>
+				<% } %>
+			</div>
+
+
+			<div class="form">
+				<div class="label">Nom du blog:</div>
+				<% if (userdata.blogname) { %>
+				<input type="text" id="blogname" name="blogname" value="<%= userdata.blogname %>" placeholder="Titre de votre blog">
+				<% } else { %>
+				<input type="text" id="blogname" name="blogname" value="" placeholder="Titre de votre blog">
+				<% } %>
+			</div>
+
+			<div class="form">
+				<div class="label">Le nom web de votre blog:</div>
+				<% if (userdata.local.email) { %>
+				<input type="text" id="blogslug" name="blogslug" value="<%= userdata.blogslug %>" placeholder="monblogamoi">
+				<% } else { %>
+				<input type="text" id="blogslug" name="blogslug" value="" placeholder="monblogamoi">
+				<% } %>				
+			</div>
+
+			<div class="form">
+				<div class="label">Couverture du blog:</div>
+				<% if (userdata.blogname) { %>
+				<input type="file" id="blog_cover" name="blogcover">
+				<% } else { %>
+				<input type="file" id="blog_cover" name="blogcover">
+				<% } %>
+			</div>
+
+			<div class="form">
+				<input type="text" id="user_id" name="user_id" value="<%= userdata.id %>">
+			</div>
+
+			<div class="form">
+				<div class="label">Lien page facebook:</div>
+				<input type="text" id="fb_page" name="fb_page" value="<%= userdata.fb_page %>">
+			</div>
+
+			<div class="form">
+				<div class="label">Lien twitter:</div>
+				<input type="text" id="tw_account" name="tw_account" value="<%= userdata.tw_account %>">
+			</div>
+			
+			<div class="form">
+				<div class="label">Lien Instagram:</div>
+				<input type="text" id="in_account" name="in_account" value="<%= userdata.in_account %>">
+			</div>
+			
+			<div class="form">
+				<div class="label">Avatar:</div>
+				<input type="file" id="user_avatar" name="avatar" onChange="readURL(this);">
+			</div>
+			
+			<div class="form">
+				<input type="submit" value="Enregistrer les modifications">
+			</div>
+			
+
+		</form>
+
+		<script type="text/javascript">
+		    function readURL(input) {
+		        if (input.files && input.files[0]) {
+		            var reader = new FileReader();
+
+		            reader.onload = function (e) {
+						$('#left-sidebar .avatar .the_avatar').attr('src', e.target.result);
+
+
+		            }
+
+		            reader.readAsDataURL(input.files[0]);
+		        }
+		    }
+		</script>
+
+
+		<script>
+			$('#main-bar #first_name').on('input', function() {
+				$('#left-sidebar .full_name .first_name').html($('#main-bar #first_name').val());
+			});
+			$('#main-bar #last_name').on('input', function() {
+				$('#left-sidebar .full_name .last_name').html($('#main-bar #last_name').val());
+			});
+			$('#main-bar #about').on('input', function() {
+				$('#left-sidebar .about').html($('#main-bar #about').val());
+			});
+		</script>
+
+
+
+</body>
+</html>

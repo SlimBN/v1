@@ -1,0 +1,162 @@
+#authors {
+	width: 1020px;
+
+	margin: 0 auto;
+	margin-top: 20px;
+	margin-bottom: 20px;
+
+	.author {
+		width: 300px;
+
+		display: inline-block;
+		vertical-align: top;
+
+		.avatar {
+			width: 150px;
+			height: 150px;
+
+			display: inline-block;
+			vertical-align: top;
+
+			img {
+				border-radius: 5px;
+			}
+		}
+
+		.data {
+			width: 120px;
+
+			display: inline-block;
+			vertical-align: top;
+
+			.name {
+				font-family: Metaghlith;
+				font-size: 25px;
+			}
+
+			.button {
+
+			}
+		}
+	}
+
+}
+
+
+#publications {
+	width: 1020px;
+
+	margin: 0 auto;
+
+	#publication {
+		position: relative;
+		width: 320px;
+		height: 370px;
+
+		display: inline-block;
+		vertical-align: top;
+
+		margin: 2px;
+		margin-bottom: 6px;
+
+		overflow: hidden;
+		
+		border-radius: 5px;
+
+		.cover {
+			position: absolute;
+			top: 0px;
+			left: 0px;
+
+			width: 320px;
+			height: 370px;
+
+			img {
+				width: 320px;
+				height: 370px;
+
+				box-shadow: 0 0 5px #333;
+
+				border-radius: 5px;
+			}
+			
+		}
+
+		.content {
+			position: absolute;
+			top: 0px;
+			left: 0px;
+
+			width: 320px;
+			height: 370px;
+
+			// padding: 10px;
+
+			background: transparent -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.1)), to(rgba(0, 0, 0, 0.8)));
+
+			color: #fff;
+			text-shadow: 0 0 5px #000;
+
+			.text {
+				position: absolute;
+				bottom: 10px;
+				left: 10px;
+
+				width: 300px;
+				max-height: 350px;
+
+				
+
+				.title {
+					font-family: Metaghlith;
+					font-size: 35px;
+					line-height: 30px;
+				}
+
+				.abstract {
+					font-family: Tisalight;
+					font-size: 18px;
+					text-align: justify;
+
+					border-top: 1px solid #fff;
+
+					padding-top: 10px;
+					margin-top: 10px;
+				}
+
+				.author {
+
+					border-top: 1px solid #fff;
+
+					padding-top: 10px;
+					margin-top: 10px;
+
+					.avatar {
+						width: 40px;
+
+						display: inline-block;
+						vertical-align: top;
+						img {
+							width: 30px;
+							height: 30px;
+
+							border-radius: 50%;
+						}
+					}
+
+					.name {
+						width: 220px;
+
+						display: inline-block;
+						vertical-align: top;
+
+						font-family: Metaghlith;
+						line-height: 30px;
+						vertical-align: middle;
+
+					}
+				}
+			}
+		}
+	}
+}

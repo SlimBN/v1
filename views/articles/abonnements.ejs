@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  	<title><%= title %></title>
+	<link rel='stylesheet' href='/stylesheets/style.css' />
+  <link rel='stylesheet' href='/stylesheets/articles/show/show.css' />
+  <link rel='stylesheet' href='/stylesheets/articles/abonnements.css' />
+  <link rel='stylesheet' href='/stylesheets/ui/pace.css' />
+  <link rel='stylesheet' href='/stylesheets/ui/fluidbox.css' />
+  <link rel='stylesheet' href='/stylesheets/ui/side-slider.css' />
+
+  <link rel='stylesheet' href='/stylesheets/ui/pace.css' />
+  <link rel='stylesheet' href='/stylesheets/ui/elements.css' />
+  <link rel='stylesheet' href='/stylesheets/fonts.css' />
+
+
+  <link rel="stylesheet" href="/stylesheets/editor/medium-editor-insert-plugin.css">
+
+	<!-- ETUDE DU REFERENCEMENT -->
+	<!-- description meta -->
+	<meta name="description" content="">
+	<meta name="robots" content="index,follow,noarchive">
+
+
+  <script src="/javascripts/jquery.js"></script>
+  <script src="/javascripts/ui/pace.min.js"></script>
+  <script src="/javascripts/ui/side-slider.js"></script>
+  <script src="/javascripts/moment-with-langs.js"></script>
+
+  <script>
+    window.onload = function(){
+      var slide_button_left = document.getElementById("slide_button_left");
+      slide_button_left.onclick = function(){
+        new Slider.Slide(this,{ 
+          panel: 'panelLeft', 
+          type: 'push', 
+          dir: 'left'
+        });
+      };
+
+      // Neglbou les liens mta3 les 3images
+      // $("#user-article-show-container #user-article-show-core .article-show-shot a").fluidbox();
+      // console.log('falwadneha');
+    };
+  </script>
+  <script>
+    moment.lang('fr');
+    var now = moment(" post.created ").fromNow();
+    console.log("redigé " + now);
+  </script>
+
+
+
+</head>
+<body>
+
+<div id="panelLeft" class="mdm-panel">
+  <ul>
+
+      <li class="home"><a href="/">Acceuil</a></li>
+    <% if (user != 'not connected') { %>
+      <li class="blog"><a href="/">Mon Blog</a></li>
+      <li class="new-article"><a href="/article/new">Rediger un article</a></li>
+      <li class="dashboard"><a href="/palmares">Mon dashboard</a></li>
+      <li class="profile"><a href="/profile/edit">Mon profil</a></li>
+      <li class="logout"><a href="/logout">Se déconnecter</a></li>
+    <% } else { %>
+      <li class="login"><a href="/login">Se connecter</a></li>
+    <% } %>
+
+  </ul>
+</div>
+
+<div class="wrapper">
+	<div id="authors">
+		<% followeesList.forEach(function(followee){ %>
+		<div class="author">
+			<div class="avatar">
+				<img src="/uploads/avatars/fullsize/<%= followee.local.avatar %>-150" alt="">
+			</div>
+			<div class="data">
+				<div class="name">
+					<%= followee.local.first_name %>
+				</div>
+				<div class="button">
+					
+				</div>
+			</div>
+		</div>
+		<% }) %>
+	</div>
+
+	<div id="publications">
+		<% articlesList.forEach(function(article){ %>
+		<div id="publication">
+			<div class="cover">
+				<img src="<%= article.shot %>-small-home">
+			</div>
+			<div class="content">
+				<div class="text">
+					<div class="title"><%= article.title %></div>
+					<div class="abstract"><%= article.abstract.substring(0, 140) %></div>
+					<div class="author">
+						<div class="avatar"><a href="/user/<%= article.author.id %>"><img src="/uploads/avatars/fullsize/<%= article.author.local.avatar %>" alt=""></a></div>
+						<div class="name"><%= article.author.local.first_name %></div>
+					</div>					
+				</div>
+
+			</div>
+		</div>
+		<% }) %>
+	</div>
+
+	<ul>
+	  <% articlesList.forEach(function(article){ %>
+	    <div>
+	    	<a href="../article/show/<%= article._id %>/<%= article.slug %>"><%= article.title %></a>
+	    </div>
+	  <% }) %>
+	</ul>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <meta property="og:description" content="<%= post.abstract %>"/>
+  <meta property="og:url" content="http://pajti.com/article/<%= post._id %>/<%= post.slug %>"/>
+  <meta property="og:type" content="article"/>
+  <meta property="og:title" content="<%= post.title %>"/>
+  <meta property="og:site_name" content="Pajti.com : <%= writer.local.username %>"/>
+  <meta property="og:image" content="http://pajti.com/<%= post.shot %>"/>
+
+  <BASE HREF="http://pajti.com/">
+  
+  <meta name="title" content="<%= writer.local.username %> : <%= post.title %>" />
+  <meta name="description" content="<%= post.abstract %>">
+  <meta name="keywords" content="">
+  <meta name="robots" content="index,follow,noarchive">
+  <meta name="author" content="<%= writer.local.first_name %> <%= writer.local.last_name %> (<%= writer.local.username %>)">
+  <meta name="copyright" content="index,follow,noarchive">
+  <meta http-equiv="Cache-Control" content="no-cache">
+  <meta http-equiv="Expires" content="">
+
+  <title><%= writer.local.username %> | <%= post.title %></title>
+
+	<link rel='stylesheet' href='/stylesheets/style.css' />
+  <link rel='stylesheet' href='/stylesheets/articles/show/show.css' />
+  <link rel='stylesheet' href='/stylesheets/ui/pace.css' />
+  <link rel='stylesheet' href='/stylesheets/ui/fluidbox.css' />
+  <link rel='stylesheet' href='/stylesheets/ui/side-slider.css' />
+
+  <link rel='stylesheet' href='/stylesheets/ui/pace.css' />
+  <link rel='stylesheet' href='/stylesheets/ui/elements.css' />
+  <link rel='stylesheet' href='/stylesheets/fonts.css' />
+
+
+  <link rel="stylesheet" href="/stylesheets/editor/medium-editor-insert-plugin.css">
+
+  <script src="/javascripts/jquery.js"></script>
+  <script src="/javascripts/ui/pace.min.js"></script>
+  <script src="/javascripts/ui/side-slider.js"></script>
+  <script src="/javascripts/moment-with-langs.js"></script>
+
+  <script>
+    window.onload = function(){
+      var slide_button_left = document.getElementById("slide_button_left");
+      slide_button_left.onclick = function(){
+        new Slider.Slide(this,{ 
+          panel: 'panelLeft', 
+          type: 'push', 
+          dir: 'left'
+        });
+      };
+
+      // Neglbou les liens mta3 les 3images
+      // $("#user-article-show-container #user-article-show-core .article-show-shot a").fluidbox();
+      // console.log('falwadneha');
+    };
+  </script>
+  <script>
+    moment.lang('fr');
+    var now = moment("<%= post.created %>").fromNow();
+    console.log("redigé " + now);
+  </script>
+
+  <script type="text/javascript">
+    $(function(){       
+      $('#vote .vote-up').click(function(e){
+        e.preventDefault();
+        console.log('select_link clicked');
+        
+        var data = {};
+        data.type = "true";
+        data.article_id = "<%= post._id %>";
+    
+        $.ajax({
+          type: 'POST',
+          data: JSON.stringify(data),
+          contentType: 'application/json',
+          url: '/vote',           
+          success: function(data) {
+            console.log('success');
+            console.log(JSON.stringify(data));
+          }
+        });
+
+      });       
+    });
+
+
+    $(function(){       
+      $('#vote .vote-down').click(function(e){
+        e.preventDefault();
+        console.log('select_link clicked');
+        
+        var data = {};
+        data.type = "false";
+        data.article_id = "<%= post._id %>";
+    
+        $.ajax({
+          type: 'POST',
+          data: JSON.stringify(data),
+          contentType: 'application/json',
+          url: '/vote',           
+          success: function(data) {
+            console.log('success');
+            console.log(JSON.stringify(data));
+          }
+        });
+
+      });       
+    });
+
+    var isfollowing = <%= follow %>;
+
+    function follow_him(){
+
+        if(isfollowing === false) {
+          $('.follow #follow-switch').attr('checked', false);
+          isfollowing = true;
+        }
+        else
+        {
+          $('.follow #follow-switch').attr('checked', true);
+          isfollowing = false;
+        }
+
+        console.log("doing it");
+    }
+
+    $(function() {
+      $('.follow #follow-switch').click(function(e){
+
+        console.log('triggered the switcher');
+        if(isfollowing === false) {
+          $('.follow #follow-switch').attr('checked', false);
+          isfollowing = true;
+
+          $.ajax({
+            type: 'POST',
+
+            url: '/user/<%= user.id %>/follow/<%= user.id %>',           
+            success: function(data) {
+              console.log('following the guy');
+              console.log(JSON.stringify(data));
+              follow_him();
+            }
+          });
+        }
+        else
+        {
+          $('.follow #follow-switch').attr('checked', true);
+          isfollowing = false;
+          
+          $.ajax({
+            type: 'POST',
+
+            url: '/user/<%= user.id %>/unfollow/<%= user.id %>',           
+            success: function(data) {
+              console.log('unfollowing the guy');
+              console.log(JSON.stringify(data));
+              follow_him();
+            }
+          });
+        }
+
+      });
+    });
+  </script>
+
+</head>
+<body>
+
+  <div id="fb-root"></div>
+  <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/fr_FR/sdk.js#xfbml=1&appId=153439174806312&version=v2.0";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>
+
+  <div id="panelLeft" class="mdm-panel">
+    <ul>
+
+        <li class="home"><a href="/@<%= writer.local.username %>">Acceuil</a></li>
+      <% if (user != 'not connected') { %>
+        <li class="blog"><a href="/@<%= writer.local.username %>">Mon Blog</a></li>
+        <li class="new-article"><a href="/article/new">Rediger un article</a></li>
+        <li class="profile"><a href="/profile/edit">Mon profil</a></li>
+        <li class="logout"><a href="/logout">Se déconnecter</a></li>
+      <% } else { %>
+        <li class="login"><a href="/login">Se connecter</a></li>
+      <% } %>
+
+    </ul>
+  </div>
+
+<div class="wrapper">
+  
+<div id="user-article-show-cover">
+<% if (post.shot) {%>
+  <div class="cover" style="background-image: url('<%= post.shot %>')">
+<% } else { %>
+  <div class="cover" style="background-image: url('/images/bgs/1.jpg')">
+<% } %>
+    <div class="overlay" style="background-color: <%= post.overlay %>;">
+
+      <% if (user == 'not connected') { %>
+      <a id="slide_button_left" href="/@<%= writer.local.username %>"><img src="/images/logo.png" alt=""></a>
+      <% } else { %>
+      <a id="slide_button_left" data-dir="left" data-type="push" data-panel="panelLeft"><img src="/images/logo.png" alt=""></a>
+      <% } %>
+
+      <div class="down-button">
+        <a href="#user-article-show-container"><i class="icons icons-read-next"></i></a>
+      </div>
+
+<!--       <div class="data-stats">
+        78% Vrai
+      </div> -->
+      <% if (user != 'not connected') { %>
+        <% if (user.id == user.id) { %>
+          <div class="edit-button" style="">
+            <a href="/article/edit/<%= post._id %>/<%= post.slug %>">Modifier</a>
+          </div>
+        <% } %>
+      <% } %>
+
+      <div class="category">
+        <%= post.sum_of_views %> <i class="fa fa-eye"></i>
+      </div>
+
+<!--       <div class="seens">
+        <%= post.sum_of_views %> <i class="fa fa-eye"></i>
+      </div> -->
+
+      <div class="container">
+
+        <div class="username" title="Slim Ben Nasrallah">
+
+          <% if (writer.local.avatar) { %>
+          <a href="/@<%= writer.local.username %>"><img src="/public/uploads/avatars/fullsize/<%= writer.local.avatar %>-150" alt="" class="the_avatar"></a>
+          <% } else { %>
+          <a href="/<%= user._id %>"><img src="/images/ui/noavatar.jpg" alt="" class="the_avatar"></a>
+          <% } %>
+
+        </div>
+
+        <div class="article-info">
+          <h1 class="title" title="<%= post.title %>">
+            <%= post.title %>
+          </h1>
+
+          <div class="abstract">
+            <%- post.abstract.substring(0, 200) %>
+          </div>
+
+          <div class="date" title="Ecrit il y'a <%= post.created %> environ">
+            <i class="fa fa-clock-o"></i> <time class="timeago" datetime="<%= post.created %>"> Ecrit <script>document.write(now)</script></time><!-- Ecrit il y'a <%= post.created %> environ -->
+          </div>
+          
+          <% if (user != 'not connected') { %>
+            <% if (user.id != user.id) { %>
+              <% if (follow == 'true') { %>
+                <div class="follow">
+                  <form action="">
+                    <input type="checkbox" id="follow-switch"/>
+                    <label for="follow-switch">
+                      <span>Suivre</span>
+                      <span>Se désabonner</span>
+                    </label>
+                  </form> 
+                </div>
+              <% } else { %>
+                <div class="follow">
+                  <form action="">
+                    <input type="checkbox" id="follow-switch" checked />
+                    <label for="follow-switch">
+                      <span>Suivre</span>
+                      <span>Se désabonner</span>
+                    </label>
+                  </form> 
+                </div>
+              <% } %>
+
+            <% } %>
+          <% } %>    
+        </div>
+        
+
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+ <br>
+</br>
+
+
+
+
+<div id="user-article-show-container">
+
+
+  <div id="user-article-show-core">
+
+
+    <div class="article-show-abstract article-show-block">
+      <%- post.abstract %>
+    </div>
+
+
+
+    <div class="article-show-content article-show-block">
+      <%- post.content %>
+    </div>
+
+
+  </div>
+
+<!--     <div id="vote" style="text-align: center">
+
+        <a href="" class="vote-up subelement"><i class="fa fa-check"></i> Je confirme</a>
+
+        <a href="" class="vote-down subelement"><i class="fa fa-times"></i> Rumeur</a>
+
+    </div>
+
+    <div id="voter-module" class="blue-grey">
+      Crédible à <span id="result">34%</span>
+    </div>
+ -->
+<!--     <div id="article-social-share">
+      <ul>
+        <li><a href=""><img src="/images/ui/social/facebook500.png" alt=""></a></li>
+        <li><a href=""><img src="/images/ui/social/twitter.png" alt=""></a></li>
+        <li><a href=""><img src="/images/ui/social/instagram.png" alt=""></a></li>
+        <li><a href=""><img src="/images/ui/social/pinterest.png" alt=""></a></li>
+        <li><a href=""><img src="/images/ui/social/googleplus-revised.png" alt=""></a></li>
+        <li><a href=""><img src="/images/ui/social/livejournal.png" alt=""></a></li>
+        <li><a href=""><img src="/images/ui/social/tumblr.png" alt=""></a></li>
+        <li><a href=""><img src="/images/ui/social/stumbleupon.png" alt=""></a></li>
+        <li><a href=""><img src="/images/ui/social/foursquare.png" alt=""></a></li>
+        <li><a href=""><img src="/images/ui/social/reddit.png" alt=""></a></li>
+        <li><a href=""><img src="/images/ui/social/digg.png" alt=""></a></li>
+        <li><a href=""><img src="/images/ui/social/email.png" alt=""></a></li>
+      </ul>
+    </div>
+ -->
+
+    <!-- AddThis Button BEGIN -->
+    <div class="addthis_toolbox addthis_default_style addthis_32x32_style" style="text-align: right;">
+    <a class="addthis_button_facebook"></a>
+    <a class="addthis_button_twitter"></a>
+    <a class="addthis_button_pinterest_share"></a>
+    <a class="addthis_button_google_plusone_share"></a>
+    <a class="addthis_button_gmail"></a>
+    <a class="addthis_button_googletranslate"></a>
+    <a class="addthis_button_instapaper"></a>
+    <a class="addthis_button_blogger"></a>
+    <a class="addthis_button_compact"></a><a class="addthis_counter addthis_bubble_style"></a>
+    </div>
+    <script type="text/javascript">var addthis_config = {"data_track_addressbar":true};</script>
+    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-532042140a1f9e7a"></script>
+    <!-- AddThis Button END -->
+    <br><br>
+    <div class="fb-comments" data-href="http://pajti.com/article/<%= post._id %>/<%= post.slug %>" data-width="1025" data-numposts="25" data-colorscheme="light"></div>
+
+</div>
+
+
+
+<div id="further-reading">
+  <div class="label">
+    Articles Similaires
+  </div>
+
+  <div id="similar">
+    
+    <% articlesList.forEach(function(article){ %>
+    <a href="/article/<%= article._id %>/<%= article.slug %>"><div class="article">
+      <img src="<%= article.shot %>" alt="">
+      <div class="titre">
+        <%= article.title %>
+      </div>
+
+      <div class="abstract">
+        <%- article.abstract %>
+      </div>
+    </div></a>
+    <% }) %>
+    
+
+
+  </div>
+  
+
+</div>
+
+
+
+    <script type="text/javascript" src="/javascripts/ui/imagesloaded.min.js"></script>
+    <script type="text/javascript" src="/javascripts/ui/fluidbox.js"></script>
+<script>
+  
+
+  $(window).scroll(function() {
+    oVal = ($(window).scrollTop() / 540);
+    //$('.blur').css('opacity', oVal);
+    // $('.cover').css({'opacity': 1 - oVal});
+    $('.cover .container').css({'padding-top': (400 * oVal)});
+
+  });
+
+
+
+  $('a[href*=#]:not([href=#])').click(function() {
+    if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') 
+        || location.hostname == this.hostname) {
+
+        var target = $(this.hash);
+        target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
+           if (target.length) {
+             $('html,body').animate({
+                 scrollTop: target.offset().top
+            }, 1000);
+            return false;
+        }
+    }
+  });
+</script>
+
+</body>
+</html>

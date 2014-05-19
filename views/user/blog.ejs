@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US" xmlns:fb="https://www.facebook.com/2008/fbml">
+<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#">
+
+	<meta property="fb:app_id" content=""/>
+	<meta property="fb:admins" content=""/>
+	<meta http-equiv="X-UA-Compatible" content="requiresActiveX=true" />
+	<meta property="og:description" content="Blog de <%= user.local.first_name %> <%= user.local.last_name %> (<%= user.local.username %>) : <%= user.local.about %>"/>
+	<meta property="og:url" content="http://pajti.com/@<%= user.local.username %>"/>
+	<meta property="og:type" content="article"/>
+	<meta property="og:title" content="Blog de <%= user.local.first_name %> <%= user.local.last_name %> (<%= user.local.username %>)"/>
+	<meta property="og:site_name" content="Pajti"/>
+	<meta property="og:image" content="http://pajti.com/<%= user.blogcover %>"/>
+	<meta name="news_keywords" content="<%= user.local.about %>">
+
+
+  	<title><%= user.blogname %> | <%= user.local.first_name %> <%= user.local.last_name %></title>
+	<link rel='stylesheet' href='/stylesheets/style.css' />
+	<link rel='stylesheet' href='/stylesheets/user/blog.css' />
+	<link rel='stylesheet' href='/stylesheets/fonts.css' />
+
+  	<!-- ETUDE DU REFERENCEMENT -->
+  	<!-- description meta -->
+  	<BASE HREF="http://pajti.com/">
+	
+	<meta name="title" content="Le Blog de <%= user.local.first_name %> <%= user.local.last_name %>" />
+  	<meta name="description" content="<%= user.local.about %>">
+  	<meta name="robots" content="index,follow,noarchive">
+	<meta name="author" content="<%= user.local.first_name %> <%= user.local.last_name %>">
+	<meta name="copyright" content="index,follow,noarchive">
+	<meta http-equiv="Cache-Control" content="no-cache">
+	<meta http-equiv="Expires" content="">
+
+	<script src="/javascripts/jquery.js"></script>
+	<script src="/javascripts/ui/pace.min.js"></script>
+	<script src="/javascripts/ui/side-slider.js"></script>
+	<script src="/javascripts/moment-with-langs.js"></script>
+</head>
+<body>
+
+	<!-- BLOG COVER -->
+	<div class="blurImg">
+		<% if (user.blogcover) { %>
+		<div class="blur" style="background-image: url('/uploads/blogcovers/fullsize/<%= user.blogcover %>')">
+		<% } else { %>
+		<div class="blur" style="background-image: url('/images/bgs/1.jpg');">
+		<% } %>
+
+		</div>
+
+	</div>
+	<!-- END BLOG COVER -->
+
+	<div id="user-container">
+
+		<div class="timeline-name">
+			<h1><%= user.blogname %></h1>
+		</div>
+
+		<div class="timeline-user-info">
+			<div class="avatar">
+				<% if (user.local.avatar) { %>
+				<a href="/@<%= user.local.username %>" title="Blog de <%= user.local.username %>"><img src="/public/uploads/avatars/fullsize/<%= user.local.avatar %>-150" alt="Avatar de <%= user.local.username %>" class="the_avatar"></a>
+				<% } else { %>
+				<a href="/@<%= user.local.username %>" title="Blog de <%= user.local.username %>"><img src="/images/ui/noavatar.jpg" alt="" class="the_avatar"></a>
+				<% } %>
+			</div>
+
+			<div class="infos">
+				<span class="username"><%= user.local.last_name %> <%= user.local.first_name %></span> - <%= user.local.about %>
+			</div>
+		</div>
+
+		<div class="social-existence">
+			<% if (user.fb_page != "") { %>
+			<a href="<%= user.fb_page %>"><img src="/images/ui/social/facebook500x2.png" alt=""></a>
+			<% } %>
+			<% if (user.tw_account != "") { %>
+			<a href="<%= user.tw_account %>"><img src="/images/ui/social/twitterx2.png" alt=""></a>
+			<% } %>
+			<% if (user.in_account != "") { %>
+			<a href="<%= user.in_account %>"><img src="/images/ui/social/instagramx2.png" alt=""></a>
+			<% } %>
+		</div>
+
+		<% if (user.number_of_articles > 0) { %>
+		<div class="fluid-bottom">
+			<a href="#user-timeline"><img src="/images/ui/buttons/down.png" alt=""></a>
+		</div>
+		<% } else { %>
+		<div class="add-article">
+			<% if (current_user != 'not_connected') { %>
+				<a href="/article/new" title="Ajouter un article">Vous pouvez commencer votre premier article par ici</a>
+			<% } %>
+		</div>
+		<% } %>
+	</div>
+
+	<% if (user.number_of_articles > 0) { %>
+	<div id="user-timeline">
+
+		<div class="fluid-top">
+			<a href="#user-container"><img src="/images/ui/buttons/up.png" alt=""></a>
+		</div>
+
+		<div class="user-time-line-articles">
+			<% user.articles.forEach(function(article){ %>
+				<% if (article.sum_of_views > 10) { %>
+
+					<!-- WIDE SCREEN ARTICLE MODULE STARTS HERE -->
+					<!-- WASSA3 WASSA3 BESH TCAPTI BA3AD -->
+					<div class="timeline-article-2" style="background-image: url('<%= article.shot %>')">
+
+						<div class="overlay">
+
+							<div class="container">
+
+								<div class="category">
+									 
+								</div>  
+
+								<div class="title">
+								<a href="../article/<%= article._id %>/<%= article.slug %>" title="<%= article.title %>"><%= article.title %></a>
+								</div>  
+
+								<div class="article-abstract">
+									<% if (article.abstract) { %>
+										<% (article.abstract = (article.abstract).substring(0, 200)) %>
+										<%- article.abstract %>
+									<% } else { %>
+										<% (article.content = (article.content).substring(0, 200)) %>
+										<%- article.content %>
+									<% } %>
+								</div>
+
+								<div class="article-community">
+
+<!-- 									<span class="article-credit">
+										80% Crédible
+									</span> -->
+
+									<div class="article-stats">
+										<div class="article-read">
+											<a href="../article/<%= article._id %>/<%= article.slug %>" title="Continuer à lire<%= article.title %>">Lire la suite</a>
+										</div>
+<!-- 
+										<span class="comments" title="80 commentaires">
+											80 Commentaires
+										</span> -->
+
+										<span class="reads" title="<%= article.sum_of_views %> Lecture">
+											<%= article.sum_of_views %> Vues
+										</span>
+									</div>
+
+								</div>
+
+							</div>
+						</div>
+
+					</div>
+
+					<!-- WASSA3 WASSA3 BESH TCAPTI BA3AD -->
+					<!-- WIDE SCREEN ARTICLE MODULE ENDS HERE -->
+
+
+				<% } else { %>
+
+					<!-- WIDE SCREEN ARTICLE MODULE STARTS HERE -->
+					<!-- WASSA3 WASSA3 BESH TCAPTI BA3AD -->
+					<div class="timeline-article-3">
+            
+            			<div class="shot" style="background-image: url('<%= article.shot %>')">
+							<div class="overlay">
+
+							</div>
+						</div>
+
+						<div class="synopsis">
+
+							<div class="category">
+								
+							</div>  
+                
+			                <div class="title">
+			                	<a href="../article/<%= article._id %>/<%= article.slug %>" title="<%= article.title %>"><%= article.title %></a>
+			                </div>  
+
+							<div class="article-abstract">
+								<% if (article.abstract) { %>
+									<% (article.abstract = (article.abstract).substring(0, 200)) %>
+									<%- article.abstract %>
+								<% } else { %>
+									<% (article.content = (article.content).substring(0, 200)) %>
+									<%- article.content %>
+								<% } %>
+
+							</div>
+
+							<div class="article-community">
+
+<!-- 								<span class="article-credit">
+									80% Crédible
+								</span> -->
+
+								<div class="article-stats">
+									<div class="article-read">
+										<a href="../article/<%= article._id %>/<%= article.slug %>" title="Continuer à lire <%= article.title %>">Lire la suite</a>
+									</div>
+
+<!-- 									<span class="comments" title="80 commentaires">
+										80 Commentaires
+									</span> -->
+
+									<span class="reads" title="<%= article.sum_of_views %> Lecture">
+										<%= article.sum_of_views %> Vues
+									</span>
+								</div>
+
+							</div>
+              
+            			</div>
+          			</div>
+
+				<% } %>
+			<% }) %>
+		</div>
+	</div>
+	<% } %>
+
+
+
+<script>
+  $(window).scroll(function() {
+    oVal = ($(window).scrollTop() / 740);
+    //$('.blur').css('opacity', oVal);
+    if (oVal < 0.9) {
+      $('.blur').css({'opacity': 1 - oVal});
+    } else {
+      $('.blur').css({'opacity': 0.10});
+    };
+    
+  });
+
+
+</script>
+
+
+<script>
+  $('a[href*=#]:not([href=#])').click(function() {
+    if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') 
+        || location.hostname == this.hostname) {
+
+        var target = $(this.hash);
+        target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
+           if (target.length) {
+             $('html,body').animate({
+                 scrollTop: target.offset().top
+            }, 1000);
+            return false;
+        }
+    }
+  });
+</script>
+
+</body>
+</html>

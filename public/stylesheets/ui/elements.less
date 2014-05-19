@@ -1,0 +1,206 @@
+#interact-button {
+	position: absolute;
+	top: 25px;
+	right: 25px;
+
+	height: 50px;
+	width: 50px;
+
+	line-height: 50px;
+	vertical-align: middle;
+
+	text-align: center;
+
+	border-radius: 50%;
+	border: 1px solid #000;
+}
+
+#writing-bar {
+	position: fixed;
+	top: 0px;
+	left: 0px;
+
+	width: 100%;
+	height: 50px;
+
+	line-height: 50px;
+
+	// border-bottom: 1px solid #ddd;
+
+	// background-color: #fff;
+
+	.left-menu-box {
+		position: fixed;
+		top: 0px;
+		left: 0px;
+
+		height: 50px;
+		width: 50px;
+
+		z-index: 99999999;
+
+		text-align: center;
+
+		// border-right: 1px solid #ddd;
+
+		&:hover {
+			background-color: #ddd;
+
+			color: #fff;
+
+			&:hover > a {
+				color: #fff;
+			}
+		}
+	}
+
+	.cover-overlay-colors {
+		position: fixed;
+		top: 0px;
+		right: 60px;
+
+		height: 50px;
+
+		line-height: 50px;
+		vertical-align: middle;
+
+		z-index: 99999999;
+
+		text-align: center;
+
+		padding-right: 10px;
+
+		// border-right: 1px solid #ddd;
+
+		.darken-circle {
+			width: 30px;
+			height: 30px;
+
+			display: inline-block;
+			vertical-align: middle;
+
+			line-height: 50px;
+			vertical-align: middle;
+
+			cursor: pointer;
+
+			border-radius: 50%;
+
+			background-color: rgba(0, 0, 0, 0.36);
+
+		}
+
+		.green-circle {
+			width: 30px;
+			height: 30px;
+
+			display: inline-block;
+			vertical-align: middle;
+
+			line-height: 50px;
+			vertical-align: middle;
+
+			cursor: pointer;
+
+			border-radius: 50%;
+
+			background-color: rgb(170, 212, 80);
+
+		}
+
+		.red-circle {
+			width: 30px;
+			height: 30px;
+
+			display: inline-block;
+			vertical-align: middle;
+
+			line-height: 50px;
+			vertical-align: middle;
+
+			cursor: pointer;
+
+			border-radius: 50%;
+
+			background-color: rgb(221, 75, 57);
+		}
+
+		.blue-circle {
+			width: 30px;
+			height: 30px;
+
+			display: inline-block;
+			vertical-align: middle;
+
+			line-height: 50px;
+			vertical-align: middle;
+
+			cursor: pointer;
+
+			border-radius: 50%;
+
+			background-color: rgb(0, 172, 237);
+		}
+	}
+
+	.publish {
+		margin-left: 60px;
+
+		// background-color: #f7f7f7;
+		// background: -webkit-linear-gradient(#fff, #f0f0f0);
+		// background: linear-gradient(#fff, #f0f0f0);
+		
+		// border: 1px solid #ccc;
+		border-radius: 2px;
+
+		// color: #5f5f5f;
+		color: #fff;
+		cursor: pointer;
+		font-weight: 100;
+		font-size: 14px;
+		// text-shadow: 0 1px #fff;
+		white-space: nowrap;
+		padding: 8px 14px 7px;
+		box-shadow: none;
+		border: none;
+
+
+
+					padding: 10px;
+
+					background-color: #eb4f37;
+					
+					a {
+						color: #fff;
+						text-decoration: none;						
+					}
+
+		// &:hover {	
+		// 	background-color: #f3f3f3;
+		// 	background: -webkit-linear-gradient(#fff, #e0e0e0);
+		// 	background: linear-gradient(#fff, #e0e0e0);
+		// }
+	}
+
+	.user-avatar {
+		position: fixed;
+		top: 5px;
+		right: 10px;
+
+		height: 40px;
+
+		line-height: 40px;
+
+		vertical-align: middle;
+
+
+		img {
+			height: 40px;
+			width: 40px;
+
+			border-radius: 50%;
+
+			vertical-align: middle;
+		}
+	}
+}

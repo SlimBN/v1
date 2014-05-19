@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+  	<%= include home/top-menu %>
+  	<%= include home/top-cover %>
+    <h1><%= title %></h1>
+    <p>Welcome to <%= title %></p>
+
+    <% if (!user) { %>
+		<a href="/login">Login</a>
+		<a href="/register">Register</a>
+	<% } %>
+
+	<% if (user) { %>
+		You are currently logged in as <%= user.username %>, <%= user.email %>, <%= user.local.first_name %>, <%= user.lastname %>
+		</br>
+		<a href="/logout">logout</a>
+	<% } %>
+  </body>
+</html>

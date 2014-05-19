@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Nouvel Article</title>
+		<link rel='stylesheet' href='/stylesheets/style.css' />
+		<link rel='stylesheet' href='/stylesheets/articles/new.css' />
+		<link rel="stylesheet" href="../stylesheets/editor/medium-editor.css"> <!-- Core -->
+		<link rel="stylesheet" href="../stylesheets/editor/themes/default.css"> <!-- or any other theme -->
+		<link rel='stylesheet' href='/stylesheets/ui/pace.css' />
+		<link rel='stylesheet' href='/stylesheets/ui/elements.css' />
+		<link rel='stylesheet' href='/stylesheets/fonts.css' />
+
+		<script src="/javascripts/jquery.js"></script>
+		<script src="/javascripts/ui/pace.min.js"></script>
+		<script src="/javascripts/ui/side-slider.js"></script>
+
+
+    	<link rel="stylesheet" href="../stylesheets/editor/medium-editor-insert-plugin.css">
+
+	</head>
+	
+	<body>
+		<div id="article-cover" class="article-edit-cover">
+		    <div class="overlay">
+				<div class="add-cover-button" style="cursor: pointer;">
+					<i class="icons icons-replace-image" onClick='$("#article_shot").trigger("click");'></i>
+					<div class="add-cover-caption" onClick='$("#article_shot").trigger("click");'>
+						Choisissez une couverture
+					</div>
+					<div id="title" class="title editable-title" contenteditable="true" data-ph="Titre..."></div>
+					<style>
+					    [contentEditable=true]:empty:not(:focus):before{
+					        content:attr(data-ph)
+					    }
+					</style>
+					<script>
+						// $('.editable-title').on('input', function() {
+						// 	$('#article_title').val($('.editable-title').html());
+						// });
+					</script>
+				</div>
+
+			</div>
+
+		</div>
+
+		<script type="text/javascript">
+		    function readURL(input) {
+		        if (input.files && input.files[0]) {
+		            var reader = new FileReader();
+
+		            reader.onload = function (e) {
+		                $('#article-cover').css('background-image', 'url('+e.target.result +')');
+		                $('#article-cover').css('width', '100%');
+		                $('#article-cover .overlay .new-cover .add-cover-button .add-cover-caption').css('display', 'none');
+		                $('#article-cover').animate({height:'70vh'}, 1000);
+		                $('#article-cover .overlay').css('background', 'rgba(0, 0, 0, 0.36)');
+		                $('#article-cover .overlay').animate({height:'70vh'}, 'slow');
+		                $('#article-cover .overlay .actions').css('display', 'block');
+		                // $('#article-cover .overlay .cover-credit').css('display', 'block');
+		                $('#article-cover .overlay .add-cover-button').css('color', '#fff');
+		                $('#article-cover .overlay .add-cover-button .title').css('color', '#fff');
+		                $('#article-cover .overlay .add-cover-button .title').css('text-shadow', '0 0 5px rgba(0, 0, 0, 0.8)');
+		                $('#article-cover .overlay .add-cover-button .add-cover-caption').css('color', '#fff');
+		                $('#article-core').css('display', 'block');
+
+		            }
+
+		            reader.readAsDataURL(input.files[0]);
+		        }
+		    }
+
+		    function atla3abstract() {
+		    	// alert($("#article-cover").height());
+		    	window.scrollTo(0, ($("#article-cover").height() - 20));
+		    }
+
+		    function changeColor(color) {
+		    	$('#article-cover .overlay').css('background', color);
+		    	$('#article_shot_overlay').val(color);
+		    }
+		</script>
+
+
+<!-- HNA ADD A DISPLAY NONE -->
+		<div id="article-core" style="display: none;">
+
+			<div class="editable-abstract" onClick="atla3abstract();" contenteditable="true" data-ph="Contenu de votre article..."></div>
+			<style>
+			    [contentEditable=true]:empty:not(:focus):before{
+			        content:attr(data-ph)
+			    }
+			</style>
+			<script>
+				// $('.editable-abstract').on('input', function() {
+				// 	$('#article_abstract').val($('.editable-abstract').html().replace(/(<([^>]+)>)/ig,""));
+				// });
+			</script>
+
+			<div class="editable content editable-content" data-placeholder="Rédigez votre histoire..."></div>
+			<script>
+			</script>
+
+
+			
+
+			<form action="/article/new" method="post" enctype='multipart/form-data' style="display: none;">
+				<input id="article_title" type="text" name="title" placeholder="Le titre de votre article ici">
+				<input id="article_shot" type="file" name="image" onChange="readURL(this);">
+				<input id="article_shot_overlay" type="text" name="overlay" value="">
+        
+        <input type="hidden" name="author_id" value="<%= author %>">
+
+				<textarea name="article_abstract" id="article_abstract" cols="30" rows="10"></textarea>
+
+				<textarea name="article_content" id="article_content" cols="30" rows="10"></textarea>
+
+				<button id="article_submit" type="submit">Publier</button>
+			</form>
+
+
+		</div>
+		
+		
+		<script src="../javascripts/editor/medium-editor.js"></script>
+		<script src="../javascripts/editor/medium-editor-insert-plugin.js"></script>
+		<script src="../javascripts/editor/medium-editor-insert-images.js"></script>
+		<script src="../javascripts/editor/editors-video.js"></script>
+		<script>
+			var editor = new MediumEditor('.editable-content');
+
+
+			$(function () {
+			  $('.editable-content').mediumInsert({
+			    editor: editor,
+			    addons: {
+			      images: {
+			        imagesUploadScript: '/api/article/images'
+			      }
+			    }
+			  });
+			});
+
+
+			// $('.content').on('input', function() {
+			// 	var content = editor.serialize();
+			// 	console.log(content);
+			// 	//content['element-0'].value
+			// 	$('#article_content').val(content['element-0'].value);
+			// });
+
+			function summarize() {
+				$('#article_title').val($('.editable-title').html().replace(/(<([^>]+)>)/ig,""));
+				$('#article_abstract').val($('.editable-abstract').html().replace(/(<([^>]+)>)/ig,""));
+
+				var content = editor.serialize();
+				console.log(content);
+				//content['element-0'].value
+				$('#article_content').val(content['element-0'].value);
+				
+				$("#article_submit").trigger("click");
+			}
+
+
+		</script>
+
+
+
+		<div id="writing-bar">
+			<div class="left-menu-box">
+				<a href="hi" title="test"><i class="fa fa-bars"></i></a>
+			</div>
+
+			<button class="publish" onClick='summarize();'>Publier</button>
+
+			<div class="cover-overlay-colors">
+				<div class="darken-circle" onClick="changeColor('rgba(0, 0, 0, 0.36)');"></div>
+				<div class="green-circle" onClick="changeColor('rgba(170, 212, 80, 0.36)');"></div>
+				<div class="red-circle" onClick="changeColor('rgba(221, 75, 57, 0.36)');"></div>
+				<div class="blue-circle" onClick="changeColor('rgba(0, 172, 237, 0.36)');"></div>
+			</div>
+
+			<div class="user-avatar"><a href="/user/<%= author.username %>"><img src="/uploads/avatars/fullsize/<%= author %>" alt="" class="the_avatar"></a></div>
+		</div>
+
+	</body>
+</html>
+
+

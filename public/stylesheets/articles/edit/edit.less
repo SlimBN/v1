@@ -1,0 +1,129 @@
+#article-cover {
+	width: 100%;
+	height: 100vh;
+
+	display: table;
+
+	background: no-repeat center center fixed; 
+  	-webkit-background-size: cover;
+  	-moz-background-size: cover;
+  	-o-background-size: cover;
+  	background-size: cover;
+
+  	-webkit-font-smoothing: antialiased;
+
+	.overlay {
+		display: table-cell;
+		position: relative;
+
+		vertical-align: middle;
+
+		z-index: 0;
+
+		text-align: center;
+
+		width: 100%;
+		// height: 100vh;
+
+		background-color: rgba(0, 0, 0, 0.36);
+		// background-color: rgba(0, 0, 0, 0);
+
+		transition: all 0.3s ease;
+	
+		.add-cover-button {
+			position:absolute;
+	        left:0; right:0;
+	        top:0; bottom:0;
+	        margin:auto;
+
+			width: 400px;
+			height: 140px;
+
+			text-align: left;
+
+			// color: #fff;
+			color: rgba(255, 255, 255, 0.9);
+			font-size: 140px;
+			text-shadow: 0 0 0px rgba(0, 0, 0, 0.8);
+
+			transition: all 0.3s ease;
+
+			.add-cover-caption {
+				font-family: Tisajwayed;
+				// color: #fff;
+				color: rgba(255, 255, 255, 0.9);
+				text-shadow: 0 0 0px rgba(0, 0, 0, 0.8);
+				font-size: 30px;
+				-webkit-font-smoothing: antialiased;
+
+				transition: all 0.3s ease;
+
+			}
+
+			.title {
+				font-family: Sans-Serif;
+				font-weight: 700;
+				font-size: 40px;
+				-webkit-font-smoothing: antialiased;
+				font-family: Metaghlith;
+				// color: #fff;
+				// text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+				color: rgba(255, 255, 255, 0.9);
+				text-shadow: 0 0 0px rgba(0, 0, 0, 0.8);
+
+				width: 800px;
+				margin: 0 auto;
+				margin-top: 20px;
+
+				outline: none;
+			}
+		}
+
+
+	}
+}
+
+#article-core {
+	width: 1000px;
+	min-height: 100px;
+
+	position: relative;
+
+	margin: 0 auto;
+	margin-bottom: 280px;
+	padding-bottom: 280px;
+
+	.editable-abstract {
+		margin-top: 20px;
+		margin-bottom: 20px;
+		
+		font-size: 22px;
+		font-weight: bold;
+		font-family: Tisajwayed;
+		-webkit-font-smoothing: antialiased;
+
+		outline: none;
+	}
+
+	.editable-content {
+		margin-top: 20px;
+		margin-bottom: 20px;
+		
+		font-size: 20px;
+		line-height: 35px;
+		font-family: Tisa;
+
+		outline: none;
+
+		p {
+			margin-top: 10px;
+			margin-bottom: 10px;
+
+			b {
+				font-family: Tisabold;
+			}
+		}
+	}
+
+	
+}
